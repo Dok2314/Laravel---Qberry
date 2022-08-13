@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Block;
+use App\Models\Location;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Block::factory(1000)->create();
+        Location::factory(6)->create();
     }
 }
