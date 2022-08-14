@@ -16,9 +16,28 @@ class Location extends Model
         'id',
         'name',
         'slug',
-        'block_id',
         'deleted_at',
         'created_at',
         'updated_at'
     ];
+
+    public function locations()
+    {
+        return self::all();
+    }
+
+    public function blocks()
+    {
+        return $this->hasMany(Block::class, 'location_id','id');
+    }
+
+    public function availableBlocksCountByLocationId($location_id)
+    {
+        $blocks = $this->blocks()
+            ->where('location_id', $location_id)
+            ->whereAvailable(1)
+            ->count();
+
+        return $blocks;
+    }
 }

@@ -5,16 +5,24 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">{{ __('Список доступных локаций') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                <div class="row">
+                        <div class="card-group">
+                            @foreach($locations as $location)
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $location->name }}</h5>
+                                    <hr>
+                                    <p class="card-text">
+                                        Морозильных камер доступно: ({{ $location->availableBlocksCountByLocationId($location->id) }})
+                                    </p>
+                                    <hr>
+                                    <a href="{{ route('calculate.view', $location) }}"><button class="btn btn-primary">Выбрать</button></a>
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
                 </div>
             </div>
         </div>

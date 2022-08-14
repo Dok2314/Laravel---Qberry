@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers as C;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [C\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'auth', 'as' => 'calculate.'], function(){
+    Route::group(['prefix' => '{location:slug}'], function(){
+        Route::get('/calculate', [C\LocationController::class, 'calculateView'])
+            ->name('view');
+        Route::post('/calculate', [C\LocationController::class, 'calculateOrder'])
+            ->name('calculateOrder');
+    });
+
+    Route::post('/order', [C\LocationController::class, 'orderCreate'])
+        ->name('makeOrder');
+
+    Route::get('/orders', [C\LocationController::class, 'orders'])
+        ->name('orders');
+});

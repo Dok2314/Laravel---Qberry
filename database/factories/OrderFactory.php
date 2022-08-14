@@ -3,10 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
-class LocationFactory extends Factory
+class OrderFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,6 +13,8 @@ class LocationFactory extends Factory
      */
     public function definition()
     {
-        // return [];
+        return [
+            //
+        ];
     }
 }

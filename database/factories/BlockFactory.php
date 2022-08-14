@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Location;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,9 +18,10 @@ class BlockFactory extends Factory
         $name = $this->faker->name();
 
         return [
-            'name'      => $name,
-            'slug'      => Str::slug($name),
-            'available' => rand(0, 1)
+            'name'         => $name,
+            'slug'         => Str::slug($name),
+            'location_id'  => Location::get()->random()->id,
+            'available'    => rand(0, 1)
         ];
     }
 }

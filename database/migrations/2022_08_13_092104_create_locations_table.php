@@ -17,10 +17,6 @@ class CreateLocationsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->foreignId('block_id')
-                ->constrained('blocks')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

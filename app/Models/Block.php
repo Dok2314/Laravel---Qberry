@@ -10,12 +10,17 @@ class Block extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const LENGTH = 2;
+    const HIGH   = 1;
+    const WIDTH  = 1;
+
     protected $table = 'blocks';
 
     protected $fillable = [
         'id',
         'name',
         'slug',
+        'location_id',
         'available',
         'deleted_at',
         'created_at',
