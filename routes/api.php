@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers as C;
+use App\Http\Controllers\Api as C;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/order', [C\LocationController::class, 'orderCreate'])
-    ->name('makeOrder');
+Route::post('/order', [C\OrderController::class, 'orderCreate']);

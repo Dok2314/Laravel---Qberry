@@ -9,8 +9,7 @@
 
                     <div class="row">
                         <div class="card-group">
-                            <form action="{{ route('calculate.calculateOrder', $location) }}" method="POST" class="form-control">
-                                @csrf
+                            <form action="{{ route('calculate.calculate-preview', $location) }}" class="form-control">
                                 <div class="form-group mb-3">
                                     <b>Выбраная локация:</b>
                                     <h5>"{{ $location->name }}"</h5>

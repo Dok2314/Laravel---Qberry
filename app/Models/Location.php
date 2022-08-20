@@ -31,26 +31,16 @@ class Location extends Model
         return $this->hasMany(Block::class, 'location_id','id');
     }
 
-    public function availableBlocksCountByLocationId($location_id)
+    public static function availableBlocksCountByLocationId($location_id)
     {
-        $order = Order::where('location_id', $location_id)->get();
-
-        if($order->count() > 0) {
-            $blocks_count = 0;
-
-            foreach ($order as $item) {
-                $blocks_count += $item->blocks_count;
-            }
-        }
-
-        $blocks = $this->blocks()
+        $blocks = Block::query()
             ->where('location_id', $location_id)
             ->whereAvailable(1)
             ->count();
 
-        if(isset($blocks_count)) {
-            return $blocks - $blocks_count;
-        }
+        $blocks -= Order::query()
+            ->where('location_id', $location_id)
+            ->sum('blocks_count');
 
         return $blocks;
     }

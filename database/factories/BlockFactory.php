@@ -15,7 +15,7 @@ class BlockFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->name();
+        $name = $this->faker->word() . '-' . $this->faker->numberBetween(11111, 99999);
 
         return [
             'name'         => $name,

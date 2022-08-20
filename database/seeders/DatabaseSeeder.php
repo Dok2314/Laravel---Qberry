@@ -3,9 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Block;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 class DatabaseSeeder extends Seeder
 {
@@ -45,5 +48,11 @@ class DatabaseSeeder extends Seeder
         }
 
         Block::factory(1500)->create();
+
+        User::create([
+           'name'     => 'Demo',
+           'email'    => 'demo',
+           'password' => Hash::make('demo')
+        ]);
     }
 }

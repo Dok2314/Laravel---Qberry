@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@php /** @var \App\DTO\Order\CalculationOrderResultDTO $calculation */ @endphp
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -12,35 +14,32 @@
                             <div class="container">
                                 Информация о бронировании:
                                 <hr>
-                                @if(!$notEnoughBlock)
+                                @if(!$calculation->not_enough_block)
                                     <div class="alert alert-warning">
                                         Недостаточно блоков для хранения
                                     </div>
                                 @endif
                                 Локация: {{ $location->name }}
                                 <br>
-                                Температура хранения: - {{ $neededTemperature }} °C
+                                Температура хранения: - {{ $calculation->recipe->temperature }} °C
                                 <br>
-                                Нужно морозильных камер: {{ $blocksNeed }}
+                                Нужно морозильных камер: {{ $calculation->blocks_need }}
                                 <br>
-                                Морозильных камер доступно: {{ $availableBlockCount }}
+                                Морозильных камер доступно: {{ $calculation->available_block_count }}
                                 <br>
-                                Период хранения: с {{ $startShelfLife }} по {{ $endShelfLife }}
+                                Период хранения: с {{ $calculation->recipe->start_shelf_life->toDateString() }} по {{ $calculation->recipe->end_shelf_life->toDateString() }}
                                 <br>
-                                Стоимость: {{ $price }} $
+                                Стоимость: {{ $calculation->price }} $
                             </div>
-                            <form action="{{ route('calculate.makeOrder') }}" method="POST" class="form-control">
+                            <form action="{{ route('calculate.makeOrder', $location) }}" method="POST" class="form-control">
                                 @csrf
                                 <input type="hidden" name="location_id" value="{{ $location->id }}">
-                                <input type="hidden" name="temperature" value="{{ $neededTemperature }}">
-                                <input type="hidden" name="start_shelf_life" value="{{ $startShelfLife }}">
-                                <input type="hidden" name="end_shelf_life" value="{{ $endShelfLife }}">
-                                <input type="hidden" name="price" value="{{ $price }}">
-                                <input type="hidden" name="volume" value="{{ $volume }}">
-                                <input type="hidden" name="available_blocks" value="{{ $availableBlockCount }}">
-                                <input type="hidden" name="enough" value="{{ $notEnoughBlock }}">
+                                <input type="hidden" name="volume" value="{{ $calculation->recipe->volume }}">
+                                <input type="hidden" name="temperature" value="{{ $calculation->recipe->temperature }}">
+                                <input type="hidden" name="start_shelf_life" value="{{ $calculation->recipe->start_shelf_life }}">
+                                <input type="hidden" name="end_shelf_life" value="{{ $calculation->recipe->end_shelf_life }}">
 
-                                <button class="btn btn-success {{ $notEnoughBlock ? '' : 'disabled'}}">Забронировать?</button>
+                                <button class="btn btn-success {{ $calculation->not_enough_block ? '' : 'disabled'}}">Забронировать?</button>
                             </form>
                             <a href="{{ url()->previous() }}"><button class="btn btn-warning">Изменить данные?</button></a>
                         </div>

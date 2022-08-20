@@ -10,6 +10,8 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const STATUS_ACTIVE = 1;
+
     protected $table = 'orders';
 
     protected $fillable = [
@@ -26,10 +28,23 @@ class Order extends Model
         'price'
     ];
 
-    public function findLocationById($location_id)
-    {
-        $location = Location::find($location_id);
+    protected $casts = [
+        'start_shelf_life' => 'date',
+        'end_shelf_life'   => 'date'
+    ];
 
-        return $location;
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+    public function getShelfLifeDaysAttribute()
+    {
+        return $this->start_shelf_life->diffInDays($this->end_shelf_life);
     }
 }

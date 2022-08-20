@@ -15,8 +15,11 @@
                                     <h5 class="card-title">{{ $location->name }}</h5>
                                     <hr>
                                     <p class="card-text">
-                                        @if($location->availableBlocksCountByLocationId($location->id) > 0)
-                                            Морозильных камер доступно: ({{ $location->availableBlocksCountByLocationId($location->id) }})
+                                        @php
+                                            $availableBlocksCount = $location::availableBlocksCountByLocationId($location->id);
+                                        @endphp
+                                        @if($availableBlocksCount > 0)
+                                            Морозильных камер доступно: ({{ $availableBlocksCount }})
                                         @else
                                             Нет доступных морозильных камер
                                         @endif

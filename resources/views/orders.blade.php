@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@php /** @var \App\Models\Order $order */ @endphp
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -18,14 +20,14 @@
                                     @endphp
                                     <div class="card w-100 container">
                                         <div class="card-body">
-                                            <h5 class="card-title">Локация: {{ $order->findLocationById($order->location_id)->name }}</h5>
+                                            <h5 class="card-title">Локация: {{ $order->location->name }}</h5>
                                             К оплате: {{ $order->price }} $
                                             <br>
                                             Обьем товара: {{ $order->volume }} м/3
                                             <br>
                                             Нужная температура: -{{ $order->needed_temperature }} °C
                                             <br>
-                                            Срок хранения: с {{ $order->start_shelf_life }} по {{ $order->end_shelf_life }}
+                                            Срок хранения: с {{ $order->start_shelf_life->toDateString() }} по {{ $order->end_shelf_life->toDateString() }} ({{ $order->shelf_life_days }} д.)
                                             <br>
                                             Нужно морозильных камер: {{ $order->blocks_count }} шт.
                                             <br>
@@ -37,9 +39,9 @@
                                                 Статус: <string class="text-danger">Не активен</string>
                                             @endif
                                             <br>
-                                            Заказ создан: {{ $order->created_at }}
+                                            Заказ создан: {{ $order->created_at->toDateString() }}
                                             <br>
-                                            Активен до: {{ $expiry_day }}
+                                            Активен до: {{ $expiry_day->toDateString() }}
                                         </div>
                                     </div>
                                     <br>

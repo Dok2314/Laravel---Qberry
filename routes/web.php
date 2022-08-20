@@ -20,19 +20,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [C\HomeController::class, 'index'])->name('home');
+Route::get('home', [C\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth','as' => 'calculate.'], function(){
     Route::group(['prefix' => '{location:slug}'], function(){
-        Route::get('/calculate', [C\LocationController::class, 'calculateView'])
+        Route::get('calculate', [C\LocationController::class, 'calculateView'])
             ->name('view');
-        Route::post('/calculate', [C\LocationController::class, 'calculateOrder'])
-            ->name('calculateOrder');
+        Route::get('calculate-preview', [C\LocationController::class, 'calculatePreview'])
+            ->name('calculate-preview');
+
+        Route::post('order', [C\LocationController::class, 'orderCreate'])
+            ->name('makeOrder');
     });
 
-    Route::post('/order', [C\LocationController::class, 'orderCreate'])
-        ->name('makeOrder');
-
-    Route::get('/orders', [C\LocationController::class, 'orders'])
+    Route::get('orders', [C\LocationController::class, 'orders'])
         ->name('orders');
 });

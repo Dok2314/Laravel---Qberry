@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
+
+use App\Http\Requests\BaseOrderRequest;
+use App\Models\Location;
 
 class OrderRequest extends BaseOrderRequest
 {
@@ -14,12 +17,8 @@ class OrderRequest extends BaseOrderRequest
         return true;
     }
 
-    protected function getRedirectUrl()
+    public function getLocation()
     {
-        if (!$this->routeIs('calculate.view')) {
-            return route('calculate.view', $this->route('location'));
-        }
-
-        return parent::getRedirectUrl();
+        return Location::find($this->input('location_id'));
     }
 }
