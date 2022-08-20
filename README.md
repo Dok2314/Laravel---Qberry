@@ -3,8 +3,8 @@
 ## Старт
 
 1) В приложении уже есть тестовый пользователь со следующими данными:
-`login`: 'demo'
-'password': 'demo;
+`login: demo`
+`password: demo`;
 
 2) Выполняем следующие команды:
 `php artisan migrate;`
