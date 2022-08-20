@@ -42,6 +42,7 @@
 
                                 <button class="btn btn-success {{ $notEnoughBlock ? '' : 'disabled'}}">Забронировать?</button>
                             </form>
+                            <a href="{{ url()->previous() }}"><button class="btn btn-warning">Изменить данные?</button></a>
                         </div>
                     </div>
                 </div>

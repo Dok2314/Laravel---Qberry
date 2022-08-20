@@ -15,7 +15,11 @@
                                     <h5 class="card-title">{{ $location->name }}</h5>
                                     <hr>
                                     <p class="card-text">
-                                        Морозильных камер доступно: ({{ $location->availableBlocksCountByLocationId($location->id) }})
+                                        @if($location->availableBlocksCountByLocationId($location->id) > 0)
+                                            Морозильных камер доступно: ({{ $location->availableBlocksCountByLocationId($location->id) }})
+                                        @else
+                                            Нет доступных морозильных камер
+                                        @endif
                                     </p>
                                     <hr>
                                     <a href="{{ route('calculate.view', $location) }}"><button class="btn btn-primary">Выбрать</button></a>

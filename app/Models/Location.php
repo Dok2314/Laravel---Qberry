@@ -33,10 +33,24 @@ class Location extends Model
 
     public function availableBlocksCountByLocationId($location_id)
     {
+        $order = Order::where('location_id', $location_id)->get();
+
+        if($order->count() > 0) {
+            $blocks_count = 0;
+
+            foreach ($order as $item) {
+                $blocks_count += $item->blocks_count;
+            }
+        }
+
         $blocks = $this->blocks()
             ->where('location_id', $location_id)
             ->whereAvailable(1)
             ->count();
+
+        if(isset($blocks_count)) {
+            return $blocks - $blocks_count;
+        }
 
         return $blocks;
     }

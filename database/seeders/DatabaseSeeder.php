@@ -44,6 +44,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        Block::factory(2500)->create();
+        Block::factory(1500)->create();
     }
 }
