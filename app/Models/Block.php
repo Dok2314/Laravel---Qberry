@@ -14,6 +14,8 @@ class Block extends Model
     const HIGH   = 1;
     const WIDTH  = 1;
 
+    const VOLUME = self::WIDTH * self::LENGTH * self::HIGH;
+
     protected $table = 'blocks';
 
     protected $fillable = [

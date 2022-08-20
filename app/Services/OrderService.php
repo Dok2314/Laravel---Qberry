@@ -8,7 +8,6 @@ use App\Models\Block;
 use App\Models\Location;
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -19,17 +18,14 @@ class OrderService
         $volume               = $dto->volume;
         $storageCostPerBlock  = 15;
 
-        $blockVolume          = Block::WIDTH * Block::LENGTH * Block::HIGH;
-        $blocksNeed           = (int) ceil($volume / $blockVolume);
-        $availableBlockCount  = $location::availableBlocksCountByLocationId($location->id);
+        $blocksNeed           = (int) ceil($volume / Block::VOLUME);
+        $availableBlockCount  = Location::availableBlocksCountByLocationId($location->id);
 
         return new CalculationOrderResultDTO([
-            'recipe' => $dto,
-            'block_volume'          => $blockVolume,
+            'recipe'                => $dto,
             'blocks_need'           => $blocksNeed,
             'available_block_count' => $availableBlockCount,
             'price'                 => $storageCostPerBlock * $blocksNeed,
-            'not_enough_block'      => $availableBlockCount >= $blocksNeed
         ]);
     }
 

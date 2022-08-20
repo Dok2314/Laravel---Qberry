@@ -26,8 +26,11 @@ Route::group(['middleware' => 'auth','as' => 'calculate.'], function(){
     Route::group(['prefix' => '{location:slug}'], function(){
         Route::get('calculate', [C\LocationController::class, 'calculateView'])
             ->name('view');
+
         Route::get('calculate-preview', [C\LocationController::class, 'calculatePreview'])
             ->name('calculate-preview');
+
+        Route::post('calculate-preview', [C\LocationController::class, 'calculatePreviewAction']);
 
         Route::post('order', [C\LocationController::class, 'orderCreate'])
             ->name('makeOrder');

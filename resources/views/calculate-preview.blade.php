@@ -14,7 +14,7 @@
                             <div class="container">
                                 Информация о бронировании:
                                 <hr>
-                                @if(!$calculation->not_enough_block)
+                                @if($calculation->isBlockCountUnavailable())
                                     <div class="alert alert-warning">
                                         Недостаточно блоков для хранения
                                     </div>
@@ -39,9 +39,12 @@
                                 <input type="hidden" name="start_shelf_life" value="{{ $calculation->recipe->start_shelf_life }}">
                                 <input type="hidden" name="end_shelf_life" value="{{ $calculation->recipe->end_shelf_life }}">
 
-                                <button class="btn btn-success {{ $calculation->not_enough_block ? '' : 'disabled'}}">Забронировать?</button>
+                                <button class="btn btn-success {{ $calculation->isBlockCountUnavailable() ? 'disabled' : ''}}">Забронировать?</button>
                             </form>
-                            <a href="{{ url()->previous() }}"><button class="btn btn-warning">Изменить данные?</button></a>
+                            <form method="POST">
+                                @csrf
+                                <button class="btn btn-warning" name="action" value="back">Изменить данные?</button>
+                            </form>
                         </div>
                     </div>
                 </div>

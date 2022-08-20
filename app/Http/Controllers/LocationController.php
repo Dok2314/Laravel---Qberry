@@ -6,6 +6,7 @@ use App\Http\Requests\OrderRequest;
 use App\Models\Location;
 use App\Models\Order;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
@@ -26,9 +27,7 @@ class LocationController extends Controller
 
     public function calculateView(Location $location)
     {
-        $location = Location::where('id', $location->id)->first();
-
-        return view('calculator',compact('location'));
+        return view('calculator', compact('location'));
     }
 
     public function calculatePreview(Location $location, OrderRequest $request)
@@ -36,6 +35,18 @@ class LocationController extends Controller
         $calculation = $this->orderService->calculateOrder($location, $request->getCalculationDTO());
 
         return view('calculate-preview', compact('location','calculation'));
+    }
+
+    public function calculatePreviewAction(OrderRequest $request)
+    {
+        if ($request->input('action') === 'back') {
+            session()->flashInput($request->validated());
+
+            return redirect()
+                ->route('calculate.view', $request->route('location'));
+        }
+
+        return back();
     }
 
     public function orderCreate(Location $location, OrderRequest $request)
