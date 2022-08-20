@@ -14,7 +14,7 @@
 
 Пример тестового запроса:
 
-`http://127.0.0.1:8000/api/order?user_id=1&location_id=4&volume=40&needed_temperature=12&start_shelf_life=2022-08-20&end_shelf_life=2022-08-24&blocks_count=25&token=aikfFpA9%23far&status=1&price=400`
+`http://127.0.0.1:8000/api/order`
 
 Тестовые данные:
 
