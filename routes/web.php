@@ -22,7 +22,7 @@ Auth::routes();
 
 Route::get('/home', [C\HomeController::class, 'index'])->name('home');
 
-Route::group(['as' => 'calculate.'], function(){
+Route::group(['middleware' => 'auth','as' => 'calculate.'], function(){
     Route::group(['prefix' => '{location:slug}'], function(){
         Route::get('/calculate', [C\LocationController::class, 'calculateView'])
             ->name('view');
